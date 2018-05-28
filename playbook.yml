@@ -1,0 +1,43 @@
+---
+- hosts: deploy
+  gather_facts: no
+
+  tasks:
+
+    - set_fact: compose_dir=/var/tmp/docker-compose
+      tags: always
+
+    - file: 
+        path: "{{ compose_dir }}"
+        state: directory
+      tags: build
+
+    - name: Upload compose files to remote host
+      copy: 
+        src: "{{ item }}"
+        dest: "{{ compose_dir }}"
+      with_items:
+        - app
+      tags: build
+
+    - name: Test task Jenkins 
+      shell: /home/ubuntu/.local/bin/docker-compose -f docker-compose.yml -f docker-compose.test.yml run node-app yarn test
+      args:
+        chdir: "{{ compose_dir }}/app"
+        executable: /bin/bash
+      tags: test
+
+    - name: Build task Jenkins
+      shell: /home/ubuntu/.local/bin/docker-compose build
+      args:
+        chdir: "{{ compose_dir }}/app"
+        executable: /bin/bash
+      tags: build
+
+    - name: Deploy task Jenkins
+      docker_service:
+        project_src: "{{ compose_dir }}/app"
+        build: yes
+        nocache: yes
+        state: present
+      tags: deploy

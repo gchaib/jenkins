@@ -1,0 +1,6 @@
+version: '3.5'
+
+services:
+    node-app:
+        volumes:
+            - './src:/app/src'

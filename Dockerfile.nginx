@@ -1,0 +1,9 @@
+FROM nginx:1.11.12-alpine
+
+ARG nginx_file
+
+COPY $nginx_file /etc/nginx/nginx.conf
+
+RUN apk add --no-cache curl
+
+CMD ["/bin/sh", "-c", "nginx -g 'daemon off;'"]

@@ -1,0 +1,5 @@
+FROM jenkins/jenkins:alpine
+
+USER root
+RUN apk add --no-cache ansible docker py-pip 
+RUN pip install docker-compose

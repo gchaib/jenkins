@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+    nginx:
+        container_name: nginx-jenkins
+        build: 
+            context: .
+            dockerfile: Dockerfile.nginx
+            args:
+              nginx_file: nginx.conf
+        ports:
+            - '80:80'
+        networks:
+            - backbone
+
+    jenkins:
+        container_name: jenkins
+        build: 
+            context: .
+            dockerfile: Dockerfile.jenkins
+        expose: 
+            - 8080
+        volumes: 
+            - 'jenkins_home:/var/jenkins_home'
+        depends_on: 
+            - nginx
+        networks:
+            - backbone
+    
+
+networks:
+    backbone:
+        driver: bridge
+        name: backbone
+    
+
+volumes:
+    jenkins_home:
