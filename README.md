@@ -79,13 +79,16 @@ curl localhost (check if ngninx is running in port 80 and is redirecting request
  1. Make changes in the repository and check if jenkins is building/testing/deploying the application. (Depends on the branch and requested action [pull requests, merge, etc]).
  2. App can be accessed in <host-ip>/logs
 
-## Authors
+## Future Versions
  1. Posible future improvements:
       1. User Docker Machine
       2. Create a docker cluster
       3. Use Ansible Container
       4. Configure repository dynamically (via script)
       5. Implement better clean up process (remove old docker images, etc)
+
+## Tracked Issues
+  1. Playbook.yml has an absolute path of docker-compose binary location in remote host.
 
 ## Authors
 
