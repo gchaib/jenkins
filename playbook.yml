@@ -41,5 +41,5 @@
         nocache: yes
         state: present
       register: err
-      failed_when: "err.rc =! 0" 
+      failed_when: "err.rc != 0" 
       tags: deploy
