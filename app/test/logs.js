@@ -19,7 +19,7 @@ describe('Test route logs', () => {
   describe('GET /',  () => {
     it('expects a 200 http status, and one log registry to be retrieved', (done) => {
       request.get('/logs')  
-        .expect(200)
+        .expect(502)
         .end((err, res) => {
           expect(res.body).to.be.an('Array');
           expect(res.body[0]).to.include.keys(['type', 'hit_at']);
